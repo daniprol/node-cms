@@ -1,10 +1,16 @@
 const express = require("express");
 const path = require("path");
 const createError = require("http-errors");
+const ejsLayouts = require("express-ejs-layouts");
 require("dotenv").config();
+require("./database/db-connect");
 
 const app = express();
 
+// SET templating engine
+app.use(ejsLayouts);
+app.set("layout", "./layouts/default.ejs"); // By default 'layout.ejs' is used
+app.set("view engine", "ejs");
 /* EXPRESS MIDDLEWARES */
 app.use(express.json()); // Configure the body parser with the express built-in middleware:
 app.use(express.urlencoded({ extended: true })); // extended URLencoded middleware
@@ -12,8 +18,13 @@ app.use(express.urlencoded({ extended: true })); // extended URLencoded middlewa
 app.use(express.static(path.join(__dirname, "public"))); // We need to serve the 'public' directory as static files
 
 /* ROUTES */
-app.use("/", (req, res) => {
-  res.send("Main route of the CMS");
+app.get("/", (req, res) => {
+  res.render("default/index");
+  //   res.send("Main route of the CMS");
+});
+
+app.get("/about", (req, res) => {
+  res.render("default/about", { layout: "layouts/nofooter.ejs" });
 });
 
 // 404 route:

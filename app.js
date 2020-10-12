@@ -24,7 +24,9 @@ app.use(express.static(path.join(__dirname, "public"))); // We need to serve the
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");
+const adminRouter = require("./routes/admin/adminRoutes");
 app.use("/", defaultRoutes);
+app.use("/admin", adminRouter);
 
 app.get("/about", (req, res) => {
   res.render("default/about", { layout: layouts.admin });

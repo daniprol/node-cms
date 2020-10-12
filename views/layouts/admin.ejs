@@ -1,11 +1,18 @@
-<%- include('../partials/default/header'); %>
-<body>
-  <!-- Navigation -->
-  <!-- {{> default/top-navigation }} -->
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/admin/admin-header') %>
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <%- include('../partials/admin/admin-topNav') %>
 
-  <!-- Page Content -->
-  <div class="container"><%- body %></div>
-  <!-- /.container -->
-  <p>THIS IS THE ADMIN DEFAULT</p>
-  <%- include('../partials/default/footer'); %>
-</body>
+    <div class="content-wrapper">
+      {{> admin/messages}}
+
+      <%- body %>
+      <!-- /.container-fluid-->
+      <!-- /.content-wrapper-->
+
+      <%- include('../partials/admin/admin-footer') %>
+    </div>
+  </body>
+</html>

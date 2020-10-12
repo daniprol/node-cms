@@ -1,10 +1,13 @@
-<%- include('../partials/default/header'); %>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/default/header'); %>
   <!-- Navigation -->
-  <!-- {{> default/top-navigation }} -->
+  <%- include('../partials/default/top-navigation') %>
 
-  <!-- Page Content -->
-  <div class="container"><%- body %></div>
+  <body>
+    <!-- Page Content -->
+    <div class="container"><%- body %></div>
+  </body>
   <!-- /.container -->
   <%- include('../partials/default/footer'); %>
-</body>
+</html>

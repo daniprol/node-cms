@@ -2,7 +2,10 @@ const express = require("express");
 const path = require("path");
 const createError = require("http-errors");
 const logger = require("morgan");
+const flash = require("connect-flash");
+const session = require("express-session");
 const ejsLayouts = require("express-ejs-layouts");
+const { globalVariables } = require("./config/configuration");
 require("dotenv").config();
 require("./database/db-connect");
 
@@ -21,6 +24,17 @@ app.use(express.json()); // Configure the body parser with the express built-in 
 app.use(express.urlencoded({ extended: true })); // extended URLencoded middleware
 // express.static: This is a built-in middleware function in Express. It serves static files and is based on serve-static.
 app.use(express.static(path.join(__dirname, "public"))); // We need to serve the 'public' directory as static files
+
+/* FLASH MESSAGES AND SESSIONS */
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+app.use(flash());
+app.use(globalVariables); // Use the middleware to pass the flash messages as global variables
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");

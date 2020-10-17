@@ -25,8 +25,11 @@
              <% } %>
              </td>
              <td>
-                 <a href="./posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a>
+                 <a href="./posts/edit/<%= post._id %>" class="btn btn-sm btn-warning mr-2">Edit post</a>
                  <!-- <a href="/posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a> -->
+                 <form action="./posts/delete/<%= post._id%>?newMethod=DELETE" method="POST">
+                    <button class="btn btn-sm btn-danger" type="submit">Delete Post</button>
+                </form>
              </td>
          </tr>
             <% }) %>

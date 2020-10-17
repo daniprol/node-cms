@@ -1,5 +1,8 @@
+const { NotExtended } = require("http-errors");
 const Post = require("../models/PostModel");
 const layoutsController = require("./layoutsController");
+const createError = require("http-errors");
+
 module.exports = {
   index: (req, res) => {
     res.render("admin/index", { layout: layoutsController.admin });
@@ -8,7 +11,7 @@ module.exports = {
     // res.send("All posts");
     res.render("admin/posts/index", { layout: layoutsController.admin });
   },
-  submitPosts: (req, res) => {
+  submitPosts: (req, res, next) => {
     console.log(req.body);
     const newPost = new Post({
       title: req.body.title,
@@ -20,8 +23,17 @@ module.exports = {
       console.log("Post saved to db successfully");
       console.log(post);
 
-      req.flash("success-messsage", "Post created successfully"); // We flash the REQuest!!!
+      req.flash("success-message", "Post created successfully"); // We flash the REQuest!!!
       res.redirect("/admin/posts");
+    }).catch(err => {
+      console.log(err.message);
+      // next(createError[err.status])
+      // next(createError.BadRequest(err.message))
+
+      req.flash("error-message", err.message); // We flash the REQuest!!!
+      res.redirect("/admin/posts");
+
+      
     });
   },
   createPosts: (req, res) => {

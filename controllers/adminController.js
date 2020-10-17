@@ -42,4 +42,14 @@ module.exports = {
   createPosts: (req, res) => {
     res.render("admin/posts/create", { layout: layoutsController.admin });
   },
+  editPost: (req, res) => {
+    // We are going to receive a parameter in the route:
+    const id = req.params.id;
+
+    Post.findById(id).then(post => {
+      console.log(post);
+      res.render('admin/posts/edit', { layout: layoutsController.admin, post: post });
+    })
+
+  }
 };

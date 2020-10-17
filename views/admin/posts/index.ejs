@@ -3,18 +3,19 @@
  <table class="table table-bordered">
      <thead class="bg-dark text-center">
          <tr class="text-white">
-             <th>Id</th>
+             <!-- <th>Id</th> -->
              <th>Title</th>
              <th>Description</th>
              <th>Status</th>
              <th>Allow Comments</th>
+             <th>Actions</th>
          </tr>
      </thead>
      <tbody class="text-center">
          <% if (posts.length) { %>
             <% posts.forEach(post => { %>
          <tr>
-             <td><%= post._id %> </td>
+             <!-- <td>post._id</td> -->
              <td><%= post.title %> </td>
              <td><%= post.description %> </td>
              <td><%= post.status %> </td>
@@ -22,6 +23,10 @@
              <% if (post.allowComments) { %>
                 <%= post.allowComments %>
              <% } %>
+             </td>
+             <td>
+                 <a href="./posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a>
+                 <!-- <a href="/posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a> -->
              </td>
          </tr>
             <% }) %>

@@ -8,8 +8,10 @@ module.exports = {
     res.render("admin/index", { layout: layoutsController.admin });
   },
   getPosts: (req, res) => {
-    // res.send("All posts");
-    res.render("admin/posts/index", { layout: layoutsController.admin });
+    Post.find().then(posts => {
+    res.render("admin/posts/index", { layout: layoutsController.admin , posts: posts});
+    })
+    // res.render("admin/posts/index", { layout: layoutsController.admin });
   },
   submitPosts: (req, res, next) => {
     console.log(req.body);
@@ -17,6 +19,7 @@ module.exports = {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
+      allowComments: req.body.allowComments === 'on'
     });
     // res.send("Submiting post");
     newPost.save().then((post) => {

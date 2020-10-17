@@ -1,0 +1,31 @@
+<div class="container">
+ <h2 class="text-center alert alert-secondary">ALL POSTS</h2>
+ <table class="table table-bordered">
+     <thead class="bg-dark text-center">
+         <tr class="text-white">
+             <th>Id</th>
+             <th>Title</th>
+             <th>Description</th>
+             <th>Status</th>
+             <th>Allow Comments</th>
+         </tr>
+     </thead>
+     <tbody class="text-center">
+         <% if (posts.length) { %>
+            <% posts.forEach(post => { %>
+         <tr>
+             <td><%= post._id %> </td>
+             <td><%= post.title %> </td>
+             <td><%= post.description %> </td>
+             <td><%= post.status %> </td>
+             <td>
+             <% if (post.allowComments) { %>
+                <%= post.allowComments %>
+             <% } %>
+             </td>
+         </tr>
+            <% }) %>
+         <% } %>
+     </tbody>
+ </table>
+</div>

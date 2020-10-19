@@ -16,6 +16,8 @@ module.exports = {
       status: req.body.status,
     });
     // res.send("Submiting post");
+
+    // TODO: check why we have 2 entries in the db for each post!
     newPost.save().then((post) => {
       console.log("Post saved to db successfully");
       console.log(post);

@@ -45,8 +45,12 @@ module.exports = {
         res.redirect("/admin/posts");
       });
   },
-  createPosts: (req, res) => {
-    res.render("admin/posts/create", { layout: layoutsController.admin });
+  createPosts: async (req, res) => {
+    const categories = await Category.find();
+    res.render("admin/posts/create", {
+      layout: layoutsController.admin,
+      categories: categories,
+    });
   },
   editPost: (req, res) => {
     // We are going to receive a parameter in the route:

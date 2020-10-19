@@ -1,39 +1,44 @@
 <div class="container">
- <h2 class="text-center alert alert-secondary">ALL POSTS</h2>
- <table class="table table-bordered">
-     <thead class="bg-dark text-center">
-         <tr class="text-white">
-             <!-- <th>Id</th> -->
-             <th>Title</th>
-             <th>Description</th>
-             <th>Status</th>
-             <th>Allow Comments</th>
-             <th>Actions</th>
-         </tr>
-     </thead>
-     <tbody class="text-center">
-         <% if (posts.length) { %>
-            <% posts.forEach(post => { %>
-         <tr>
-             <!-- <td>post._id</td> -->
-             <td><%= post.title %> </td>
-             <td><%= post.description %> </td>
-             <td><%= post.status %> </td>
-             <td>
-             <% if (post.allowComments) { %>
-                <%= post.allowComments %>
-             <% } %>
-             </td>
-             <td>
-                 <a href="./posts/edit/<%= post._id %>" class="btn btn-sm btn-warning mr-2">Edit post</a>
-                 <!-- <a href="/posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a> -->
-                 <form action="./posts/delete/<%= post._id%>?newMethod=DELETE" method="POST">
-                    <button class="btn btn-sm btn-danger" type="submit">Delete Post</button>
-                </form>
-             </td>
-         </tr>
-            <% }) %>
-         <% } %>
-     </tbody>
- </table>
+  <h2 class="text-center alert alert-secondary">ALL POSTS</h2>
+  <table class="table table-bordered">
+    <thead class="bg-dark text-center">
+      <tr class="text-white">
+        <!-- <th>Id</th> -->
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Allow Comments</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <% if (posts.length) { %> <% posts.forEach(post => { %>
+      <tr>
+        <!-- <td>post._id</td> -->
+        <td><%= post.title %></td>
+        <td><%= post.description %></td>
+        <td><%= post.status %></td>
+        <td>
+          <% if (post.allowComments) { %> <%= post.allowComments %> <% } %>
+        </td>
+        <td class="d-flex">
+          <a
+            href="./posts/edit/<%= post._id %>"
+            class="btn btn-sm btn-warning mr-2"
+            >Edit post</a
+          >
+          <!-- <a href="/posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit post</a> -->
+          <form
+            action="./posts/delete/<%= post._id%>?newMethod=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger" type="submit">
+              Delete Post
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% }) %> <% } %>
+    </tbody>
+  </table>
 </div>

@@ -53,9 +53,24 @@
 <script src="/js/sb-admin.min.js"></script>
 
 <script>
-  $(document).ready(function() {
-    setTimeout(function() {
-      $('.auto-hide').slideUp(300);
+  $(document).ready(function () {
+    setTimeout(function () {
+      $(".auto-hide").slideUp(300);
     }, 3000);
-  })
+  });
+
+  /*   $("#create-category-button").on("click", function (e) {
+    e.preventDefault();
+
+    let data = $("#category-title").val();
+    // alert(data);
+    $.ajax({
+      url: '/admin/category',
+      type: 'POST',
+      data: { name: data },
+      success: function (response) {
+        let html = 
+      }
+    })
+  }); */
 </script>

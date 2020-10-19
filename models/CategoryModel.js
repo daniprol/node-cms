@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema(
+const CategorySchema = new Schema(
   {
     title: {
       type: String,
@@ -13,7 +13,7 @@ const PostSchema = new Schema(
     },
     allowComments: {
       type: Boolean,
-      default: false
+      required: true
     },
     description: {
       type: String,
@@ -22,23 +22,13 @@ const PostSchema = new Schema(
    user: {
       type: Schema.Types.ObjectId,
       ref: 'user'
-    },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: 'category'
-    },
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'comment'
-      }
-    ]
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const PostModel = mongoose.model("post", PostSchema);
+const CategoryModel = mongoose.model("category", PostSchema);
 
-module.exports = PostModel;
+module.exports = CategoryModel;

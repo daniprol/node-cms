@@ -5,7 +5,8 @@ const logger = require("morgan");
 const flash = require("connect-flash");
 const session = require("express-session");
 const ejsLayouts = require("express-ejs-layouts");
-const methodOverride = require('method-override')
+const methodOverride = require("method-override");
+const { selectOption } = require("./config/customFunctions");
 const { globalVariables } = require("./config/configuration");
 require("dotenv").config();
 require("./database/db-connect");
@@ -20,7 +21,7 @@ app.set("view engine", "ejs");
 // app.set("views", path.join(__dirname, "/anotherViewsFolder"));
 
 /* EXPRESS MIDDLEWARES */
-app.use(methodOverride('newMethod'))
+app.use(methodOverride("newMethod"));
 app.use(logger("dev"));
 app.use(express.json()); // Configure the body parser with the express built-in middleware:
 app.use(express.urlencoded({ extended: true })); // extended URLencoded middleware
@@ -37,6 +38,7 @@ app.use(
 );
 app.use(flash());
 app.use(globalVariables); // Use the middleware to pass the flash messages as global variables
+app.locals.selectOption = selectOption;
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");

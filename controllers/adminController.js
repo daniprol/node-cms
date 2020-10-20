@@ -55,16 +55,17 @@ module.exports = {
       categories: categories,
     });
   },
-  editPost: (req, res) => {
+  editPost: async (req, res) => {
     // We are going to receive a parameter in the route:
     const id = req.params.id;
-
-    Post.findById(id).then((post) => {
-      console.log(post);
-      res.render("admin/posts/edit", {
-        layout: layoutsController.admin,
-        post: post,
-      });
+    const post = await (await Post.findById(id)).populate("category");
+    const categories = await Category.find();
+    console.log(categories);
+    console.log(post.category._id);
+    res.render("admin/posts/edit", {
+      layout: layoutsController.admin,
+      post: post,
+      categories: categories,
     });
   },
   deletePost: (req, res) => {

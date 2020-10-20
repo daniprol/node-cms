@@ -8,12 +8,14 @@ module.exports = {
     res.render("admin/index", { layout: layoutsController.admin });
   },
   getPosts: (req, res) => {
-    Post.find().then((posts) => {
-      res.render("admin/posts/index", {
-        layout: layoutsController.admin,
-        posts: posts,
+    Post.find()
+      .populate("category")
+      .then((posts) => {
+        res.render("admin/posts/index", {
+          layout: layoutsController.admin,
+          posts: posts,
+        });
       });
-    });
     // res.render("admin/posts/index", { layout: layoutsController.admin });
   },
   submitPosts: (req, res, next) => {
@@ -23,6 +25,7 @@ module.exports = {
       description: req.body.description,
       status: req.body.status,
       allowComments: req.body.allowComments === "on",
+      category: req.body.category,
     });
     // res.send("Submiting post");
 

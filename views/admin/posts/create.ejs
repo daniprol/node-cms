@@ -27,9 +27,9 @@
           <label for="category">Category</label>
           <select name="category" id="category" class="form-control">
             <% categories.forEach(cat => { %>
-            <option value="<%= cat %> ">
-              <!-- <%= cat.title[0].toUpperCase() + cat.title.substring(1)%> -->
-              <%= cat.title %>
+            <option value="<%= cat._id %>">
+              <%= cat.title[0].toUpperCase() + cat.title.substring(1)%>
+              <!-- <%= cat.title %> -->
             </option>
             <% }) %>
           </select>

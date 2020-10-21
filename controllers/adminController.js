@@ -68,6 +68,29 @@ module.exports = {
       categories: categories,
     });
   },
+
+  editPostSubmit: (req, res) => {
+    const id = req.params.id;
+
+    Post.findById(id).then((post) => {
+      post.title = req.body.title;
+      post.status = req.body.status;
+      post.description = req.body.description;
+      post.allowComments = req.body.allowComments === "on";
+      post.category = req.body.category;
+
+      post.save().then((updatedPost) => {
+        console.log("Post updated", updatedPost);
+
+        req.flash(
+          "success-message",
+          `The post ${updatedPost.title} has been updated`
+        );
+        res.redirect("/admin/posts");
+      });
+    });
+  },
+
   deletePost: (req, res) => {
     Post.findByIdAndDelete(req.params.id).then((deletedPost) => {
       req.flash(

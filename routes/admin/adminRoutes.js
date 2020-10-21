@@ -16,7 +16,10 @@ router
   .get(adminController.createPosts)
   .post(adminController.submitPosts);
 
-router.route("/posts/edit/:id").get(adminController.editPost);
+router
+  .route("/posts/edit/:id")
+  .get(adminController.editPost)
+  .put(adminController.editPostSubmit);
 router.route("/posts/delete/:id").delete(adminController.deletePost);
 
 router.route("/category").get(adminController.getCategories);

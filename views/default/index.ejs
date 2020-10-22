@@ -7,7 +7,7 @@
     </h1>
 
     <!-- Blog Post -->
-    <!-- {{#each posts}} -->
+    <% posts.forEach(post => { %>
 
     <div class="card mb-4">
       <img
@@ -16,17 +16,17 @@
         alt="Card image cap"
       />
       <div class="card-body">
-        <h2 class="card-title">{{ title }}</h2>
-        <p class="card-text">{{ description }}</p>
+        <h2 class="card-title"><%= post.title %></h2>
+        <p class="card-text"><%= post.description %></p>
         <a href="#" class="btn btn-primary">Read More &rarr;</a>
       </div>
       <div class="card-footer text-muted">
-        Posted on {{ creationDate }} by
+        Posted on <%= post.createdAt.toLocaleString() %> by
         <a href="#">Admin</a>
       </div>
     </div>
 
-    <!-- {{/each}} -->
+    <% }) %>
 
     <!-- Pagination -->
     <ul class="pagination justify-content-center mb-4">
@@ -61,11 +61,11 @@
         <div class="row">
           <div class="col-lg-6">
             <ul class="list-unstyled mb-0">
-              {{#each categories}}
+              <% categories.forEach(cat => { %>
               <li>
-                <a href="#">{{ title }}</a>
+                <a href="#"><%= cat.title %> </a>
               </li>
-              {{/each}}
+              <% }) %>
             </ul>
           </div>
         </div>

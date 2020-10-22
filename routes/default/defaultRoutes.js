@@ -3,7 +3,8 @@ const router = express.Router();
 const defaultController = require("../../controllers/defaultController");
 
 // router.get("/", defaultController.index);
-router.route("/").get(defaultController.index);
+// router.route("/").get(defaultController.index);
+router.route("/").get(defaultController.indexAlt);
 
 router
   .route("/login")

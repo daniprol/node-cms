@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../../controllers/adminController");
+const { admin } = require("../../controllers/layoutsController");
 
 // If we wanted to set the layout manually to all the admin routes:
 // router.all("/*", (req, res, next) => {
@@ -26,4 +27,8 @@ router.route("/category").get(adminController.getCategories);
 
 router.route("/category/create").post(adminController.createCategory);
 
+router
+  .route("/category/edit/:id")
+  .get(adminController.editCategory)
+  .put(adminController.editCategorySubmit);
 module.exports = router;

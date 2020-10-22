@@ -132,4 +132,54 @@ module.exports = {
         // next(err)
       });
   },
+  editCategory: async (req, res) => {
+    console.log(`You want to edit the category ${req.params.id}`);
+    try {
+      const id = req.params.id;
+
+      const categories = await Category.find();
+
+      const categoryToEdit = await Category.findById(id);
+      res.render("admin/category/edit", {
+        layout: layoutsController.admin,
+        categories: categories,
+        categoryToEdit: categoryToEdit,
+      });
+    } catch (error) {
+      console.log(err.message);
+      req.flash("error-message", err.message); // We flash the REQuest!!!
+      res.redirect("/admin/category/");
+    }
+  },
+
+  editCategorySubmit: (req, res, next) => {
+    console.log(req.body);
+
+    const id = req.params.id;
+
+    const newTitle = req.body.title;
+
+    if (!newTitle) {
+      req.flash("error-message", "The category must have a title!");
+      res.redirect(`/admin/category/edit/${id}`);
+      return;
+    }
+    Category.findByIdAndUpdate(
+      id,
+      { title: req.body.title },
+      (err, catSaved) => {
+        if (err) {
+          console.log(err.message);
+          req.flash("error-message", err.message); // We flash the REQuest!!!
+          // return next(err)
+        }
+        console.log("Category updated", catSaved);
+        req.flash(
+          "success-message",
+          `Category title updated successfully to ${newTitle}`
+        );
+        res.redirect("/admin/category/");
+      }
+    );
+  },
 };

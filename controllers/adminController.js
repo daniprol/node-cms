@@ -2,6 +2,7 @@ const Post = require("../models/PostModel");
 const Category = require("../models/CategoryModel");
 const layoutsController = require("./layoutsController");
 const createError = require("http-errors");
+const { isFileEmpty } = require('../config/customFunctions')
 
 module.exports = {
   index: (req, res) => {
@@ -20,12 +21,31 @@ module.exports = {
   },
   submitPosts: (req, res, next) => {
     console.log(req.body);
+
+    // Chech for input file
+    let filename = '';
+    console.log(req.files);
+
+    if(!isFileEmpty(req.files)) {
+      let file = req.files.uploadedFile
+      filename = file.name
+      let uploadDir = './public/uploads/'
+
+      file.mv(uploadDir + filename, (err) => {
+        if (err) {
+        req.flash("error-message", err.message); // We flash the REQuest!!!
+        res.redirect("/admin/posts");
+        return
+        }
+      })
+    }
     const newPost = new Post({
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
       allowComments: req.body.allowComments === "on",
       category: req.body.category,
+      file: `/uploads/${filename}`
     });
     // res.send("Submiting post");
 

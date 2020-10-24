@@ -6,6 +6,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const ejsLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
+const fileUpload = require('express-fileupload')
 const { selectOption } = require("./config/customFunctions");
 const { globalVariables } = require("./config/configuration");
 require("dotenv").config();
@@ -39,6 +40,12 @@ app.use(
 app.use(flash());
 app.use(globalVariables); // Use the middleware to pass the flash messages as global variables
 app.locals.selectOption = selectOption;
+// app.use(fileUpload({
+//   limits: { fileSize: 20 * 1024 }, // This is supposed to be 20kb right?
+//     useTempFiles : true,
+//     tempFileDir : '/tmp/'
+// }))
+app.use(fileUpload())
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");

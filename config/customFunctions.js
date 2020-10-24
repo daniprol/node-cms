@@ -4,4 +4,13 @@ module.exports = {
       .fn(this)
       .replace(new RegExp('value="' + status + '"'), '$&selected="selected"');
   },
+
+  isFileEmpty: function(obj) {
+    for (let key in obj) {
+      if(obj.hasOwnProperty(key)) {
+        return false
+      }
+    }
+    return true
+  }
 };

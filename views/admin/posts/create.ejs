@@ -3,7 +3,7 @@
 
   <div class="row p-4">
     <div class="col-md-10">
-      <form action="/admin/posts/create" method="POST">
+      <form action="/admin/posts/create" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label for="title">Title</label>
           <input
@@ -13,6 +13,10 @@
             placeholder="Enter the title"
             name="title"
           />
+        </div>
+        <div class="form-group">
+          <label for="file">File Upload</label>
+          <input type="file" name="uploadedFile" id="file" class="form-control">
         </div>
         <div class="form-group">
           <label for="status">Status</label>

@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include('../partials/default/header'); %>
-  <!-- Navigation -->
-  <%- include('../partials/default/top-navigation') %>
 
   <body>
+  <!-- Navigation -->
+  <%- include('../partials/default/top-navigation') %>
     <!-- Page Content -->
-    <div class="container"><%- body %></div>
+    <div class="container">
+
+<%- include('../partials/default/messages') %>
+      <%- body %>  <!-- /.container -->
+    </div>
+    <%- include('../partials/default/footer'); %>
+
   </body>
-  <!-- /.container -->
-  <%- include('../partials/default/footer'); %>
 </html>

@@ -42,9 +42,9 @@ function initializePassport(passport) {
 
   // The function to deserialize the user takes the user id as an argument
   passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
+    User.findById(id, (err, user) => {
+      done(err, user)
+    })
   });
 
 }

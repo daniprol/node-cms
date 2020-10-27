@@ -2,6 +2,7 @@ const layoutsController = require("./layoutsController");
 const Post = require("../models/PostModel");
 const User = require('../models/UserModel')
 const Category = require("../models/CategoryModel");
+const createError = require('http-errors')
 
 module.exports = {
   index: async (req, res, next) => {
@@ -20,7 +21,7 @@ module.exports = {
   },
 
   indexAlt: (req, res, next) => {
-    Promise.all([Post.find(), Category.find()])
+    Promise.all([Post.find().sort({'createdAt': 'desc'}), Category.find()])
       .then((result) => {
         const posts = result[0];
         const categories = result[1];
@@ -96,4 +97,17 @@ module.exports = {
       })
     }
   },
+
+  singlePost: (req, res, next) => {
+    const id = req.params.id;
+
+    Post.findById(id).then(post => {
+      console.log('Post solicitado:', post);
+      res.render('default/singlePost', { 
+        layout: layoutsController.default,
+        post: post})
+    }).catch(err => {
+      next(createError.NotFound('The post you requested does not exist!'))
+    })
+  }
 };

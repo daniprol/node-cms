@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload')
 const { selectOption } = require("./config/customFunctions");
 const { globalVariables } = require("./config/configuration");
 const passport = require('passport')
+const { isAuth } = require('./utils/authenticationFunctions')
 // const initializePassport = require('./config/localStrategy')
 if (process.env.NODE_ENV !== 'production') {
   require("dotenv").config();
@@ -43,6 +44,11 @@ app.use(
   })
 );
 app.use(flash());
+
+// CONFIGURE THE PASSPORT LOCAL STRATEGY: Make sure the app is using sessions and flash messages
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(globalVariables); // Use the middleware to pass the flash messages as global variables
 app.locals.selectOption = selectOption;
 // app.use(fileUpload({
@@ -52,16 +58,12 @@ app.locals.selectOption = selectOption;
 // }))
 app.use(fileUpload())
 
-// CONFIGURE THE PASSPORT LOCAL STRATEGY: Make sure the app is using sessions and flash messages
-app.use(passport.initialize())
-app.use(passport.session())
-
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");
 const adminRouter = require("./routes/admin/adminRoutes");
 app.use("/", defaultRoutes);
-app.use("/admin", adminRouter);
+app.use("/admin",isAuth,  adminRouter);
 
 app.get("/about", (req, res) => {
   res.render("default/about", { layout: layouts.admin });

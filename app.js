@@ -9,7 +9,12 @@ const methodOverride = require("method-override");
 const fileUpload = require('express-fileupload')
 const { selectOption } = require("./config/customFunctions");
 const { globalVariables } = require("./config/configuration");
-require("dotenv").config();
+const passport = require('passport')
+// const initializePassport = require('./config/localStrategy')
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
+
 require("./database/db-connect");
 
 const app = express();
@@ -33,8 +38,8 @@ app.use(express.static(path.join(__dirname, "public"))); // We need to serve the
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: true, // Save an empty value in the session if there's no session
+    resave: true, // Resave session variables if nothing is changed
   })
 );
 app.use(flash());
@@ -46,6 +51,11 @@ app.locals.selectOption = selectOption;
 //     tempFileDir : '/tmp/'
 // }))
 app.use(fileUpload())
+
+// CONFIGURE THE PASSPORT LOCAL STRATEGY: Make sure the app is using sessions and flash messages
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 /* ROUTES */
 const defaultRoutes = require("./routes/default/defaultRoutes");

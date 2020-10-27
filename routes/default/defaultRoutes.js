@@ -45,4 +45,8 @@ router
   .get(isNotAuth, defaultController.registerGet)
   .post(defaultController.registerPost);
 
+
+router.route('/post/:id')
+    .get(defaultController.singlePost)
+
 module.exports = router;

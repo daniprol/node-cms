@@ -36,7 +36,8 @@ router
 
   router.route( '/logout')
   .get(isAuth, (req, res) => {
-	req.logout() // REQ !!
+  req.logout() // REQ !!
+  req.flash('success-message', 'You have been logged out successfully!')
   res.redirect('/')})
   
 

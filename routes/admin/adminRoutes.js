@@ -31,4 +31,8 @@ router
   .route("/category/edit/:id")
   .get(adminController.editCategory)
   .put(adminController.editCategorySubmit);
+
+router.route('/comment')
+  .get(adminController.getComments)
+
 module.exports = router;

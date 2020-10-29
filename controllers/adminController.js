@@ -1,5 +1,6 @@
 const Post = require("../models/PostModel");
 const Category = require("../models/CategoryModel");
+const Comment = require('../models/CommentModel')
 const layoutsController = require("./layoutsController");
 const createError = require("http-errors");
 const { isFileEmpty } = require('../config/customFunctions')
@@ -202,4 +203,20 @@ module.exports = {
       }
     );
   },
+
+  getComments: (req, res) => {
+    Comment.find()
+      .populate('user')
+      .then(comments => {
+        console.log(comments);
+        res.render('admin/comments/index', { 
+          layout: layoutsController.admin,
+          comments: comments })
+      })
+
+
+
+  }
+
+
 };

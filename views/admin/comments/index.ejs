@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="container">
+        <div class="col-md-10">
+            <table class="table table-bordered text-center text-white">
+                <thead class="bg-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Publisher</th>
+                        <th>Approve Comments</th>
+                        <th>Date</th>
+                        <th>Comment body</th>
+                    </tr>
+                </thead>
+
+                <tbody class="text-dark">
+                    <% comments.forEach(comment => { %>
+                        <tr>
+                            <td><%= comment.id %></td>
+                            <td style="width: auto;"><%= comment.user.firstName %> <%= comment.user.lastName %> </td>
+                            <td><%= comment.commentIsApproved %> </td>
+                            <td><%= comment.user.createdAt.toLocaleString() %></td>
+                            <td><%= comment.body %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@ const layoutsController = require("./layoutsController");
 const Post = require("../models/PostModel");
 const User = require('../models/UserModel')
 const Category = require("../models/CategoryModel");
+const Comment = require('../models/CommentModel')
 const createError = require('http-errors')
 
 module.exports = {
@@ -98,16 +99,49 @@ module.exports = {
     }
   },
 
-  singlePost: (req, res, next) => {
-    const id = req.params.id;
-
-    Post.findById(id).then(post => {
-      console.log('Post solicitado:', post);
+  singlePost: async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const post = await Post.findById(id)
+      const comments = await Comment.find().populate('user')
       res.render('default/singlePost', { 
         layout: layoutsController.default,
-        post: post})
-    }).catch(err => {
+        post: post,
+        comments: comments
+      })
+    } catch (error) {
       next(createError.NotFound('The post you requested does not exist!'))
-    })
+    }
+
+  },
+
+
+  // SUBMIT A COMMENT IN A POST
+  submitComment: async (req, res) => {
+    try {
+      if(req.user) {
+        const post = await Post.findById(req.params.id)
+        console.log('You want to add a comment in this post', post);
+        const newComment = new Comment({
+          user: req.user.id,
+          body: req.body.comment_body,
+          commentIsApproved: true
+        })
+        const savedComment = await newComment.save()
+        console.log('You just submitted the next comment:' , savedComment);
+
+        req.flash('success-message', 'Your comment was submitted successfully!')
+        res.redirect(`/post/${req.params.id}`)
+
+      } else {
+        throw createError.Forbidden('You must be logged in to submit a comment')
+      }
+    } catch (error) {
+        req.flash('error-message', error.message)
+        res.redirect(`/post/${req.params.id}`)
+      
+    }
+
   }
+
 };

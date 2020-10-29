@@ -1,6 +1,6 @@
     <div class="row">
         <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 mb-2">
             <!-- Title -->
             <h1 class="mt-4"><%= post.title %> </h1>
             <!-- Author -->
@@ -28,32 +28,34 @@
             <div class="card my-4">
                 <h5 class="card-header">Leave a Comment:</h5>
                 <div class="card-body">
-                    <form action="/post/{{post._id}}" method="post">
+                    <% if (user) { %>
+                     
+                    <form action="/post/<%= post.id %>" method="post">
                         <div class="form-group">
                             <textarea class="form-control" rows="3" name="comment_body"></textarea>
                             <input type="hidden" name="id" value="<%= post._id %> ">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                        <% } else { %>
+                     <p class="text-center">You must be logged in to add a comment. Please, <a href="/login">log in</a></p>    
+                    <% } %>
                 </div>
             </div>
 
             <!-- Single Comment -->
-
-            {{#each post.comments}}
-                {{#if commentIsApproved}}
+            <% comments.forEach(comment => { %>
+                <% if (comment.commentIsApproved) { %>
                     <div class="media mb-4">
                         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                         <div class="media-body">
-                            <h5 class="mt-0">{{user.firstName}} {{user.lastName}}</h5>
-                           {{body}}
+                            <h5 class="mt-0"><%= comment.user.firstName %> <%= comment.user.lastName %></h5>
+                           <%= comment.body %> 
                         </div>
                     </div>
-                {{/if}}
-
-            {{/each}}
-
-
+                <% } %>
+             
+            <% }) %>
 
 
         </div>

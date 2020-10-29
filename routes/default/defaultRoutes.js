@@ -49,5 +49,6 @@ router
 
 router.route('/post/:id')
     .get(defaultController.singlePost)
+    .post(defaultController.submitComment)
 
 module.exports = router;

@@ -3,7 +3,8 @@ const Category = require("../models/CategoryModel");
 const Comment = require('../models/CommentModel')
 const layoutsController = require("./layoutsController");
 const createError = require("http-errors");
-const { isFileEmpty } = require('../config/customFunctions')
+const { isFileEmpty } = require('../config/customFunctions');
+const { Error } = require("mongoose");
 
 module.exports = {
   index: (req, res) => {
@@ -216,7 +217,7 @@ module.exports = {
 
 
 
-  }
+  } 
 
 
 };

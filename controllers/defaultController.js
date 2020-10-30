@@ -102,12 +102,13 @@ module.exports = {
   singlePost: async (req, res, next) => {
     try {
       const id = req.params.id;
-      const post = await Post.findById(id)
-      const comments = await Comment.find().populate('user')
+      const post =  await Post.findById(id).populate('comments').populate('comments.user')
+      console.log(post);
+      // const comments = await Comment.find().populate('user')
       res.render('default/singlePost', { 
         layout: layoutsController.default,
         post: post,
-        comments: comments
+        comments: post.comments
       })
     } catch (error) {
       next(createError.NotFound('The post you requested does not exist!'))
@@ -128,7 +129,10 @@ module.exports = {
           commentIsApproved: true
         })
         const savedComment = await newComment.save()
-        console.log('You just submitted the next comment:' , savedComment);
+        post.comments.push(savedComment)
+        const updatedPost = await post.save()
+        console.log('Your comment has been added to this post', updatedPost);
+        // console.log('You just submitted the next comment:' , savedComment);
 
         req.flash('success-message', 'Your comment was submitted successfully!')
         res.redirect(`/post/${req.params.id}`)
